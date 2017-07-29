@@ -1,5 +1,12 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.box {
+    margin: auto;
+    width: 50%;
+    height: 500px;
+    width: 500px;
 }

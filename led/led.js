@@ -20,7 +20,7 @@ five.Board().on("ready", function () {
     if (index === rainbow.length) {
       index = 0;
     } else {
-      firebaseRef.set({ "colornow": rainbow[index] });
+      firebaseRef.set({ "color": rainbow[index] });
     }
   });
 });
