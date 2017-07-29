@@ -1,26 +1,28 @@
-var Firebase = require("firebase");
-var five = require("johnny-five");
+const Firebase = require("firebase");
+const five = require("johnny-five");
 const firebaseKey = require('./firebasekey.js');
 
 // Create a new reference of Firebase db from module (you have to add the key yourself by visiting the firebase console)
-var config = firebaseKey.key;
-
+const config = firebaseKey.key;
 Firebase.initializeApp(config);
+const firebaseRef = Firebase.database().ref();
 
-var firebaseRef = Firebase.database().ref();
+const LEDPINS = [9, 10, 11];
+
 
 five.Board().on("ready", function () {
-
-  var rgb = new five.Led.RGB([9, 10, 11]);
-  var index = 0;
-  var rainbow = ["FF0000", "FF7F00", "FFFF00", "00FF00", "0000FF", "4B0082", "8F00FF"];
-
+  var rgb = new five.Led.RGB(LEDPINS);
   this.loop(1000, function () {
-    rgb.color(rainbow[index++]);
-    if (index === rainbow.length) {
-      index = 0;
-    } else {
-      firebaseRef.set({ "color": rainbow[index] });
-    }
-  });
+
+    let fbColor = '#555555';
+
+    firebaseRef.on('value', snap => {
+      if (snap.val) {
+        fbColor = snap.val().color
+      }
+    });
+    console.log(fbColor);
+    //not sure how extensive the range of the arduino LED is...
+    rgb.color(fbColor);
+  })
 });
