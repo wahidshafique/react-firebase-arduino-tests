@@ -3,17 +3,3 @@ body {
     padding: 0;
     font-family: sans-serif;
 }
-
-.box {
-    padding-top: 2vh;
-    margin-left: 20%;
-}
-
-@media (min-width: 900px) {
-    .box {
-        margin: auto;
-        width: 50%;
-        height: 500px;
-        width: 200px;
-    }
-}
