@@ -17,6 +17,11 @@ five.Board().on("ready", function () {
   firebaseRefArduino.update({ isArduinoOn: true })
   var rgb = new five.Led.RGB(LEDPINS);
 
+  this.on("exit", function () {
+    console.log("exiting...")
+    firebaseRefArduino.update({ isArduinoOn: false });
+  });
+
   this.loop(1000, function () {
 
     let fbColor = '#555555';
@@ -28,12 +33,15 @@ five.Board().on("ready", function () {
         console.log("the app firebase reference has not been initialized...");
       }
     });
+
     console.log(fbColor);
     //not sure how extensive the range of the arduino LED is...
     rgb.color(fbColor);
-  })
+  });
 });
 
-five.Board().on("close", function () {
-  firebaseRefArduino.set({ isArduinoOn: false });
-})
+// process.on('SIGINT', function () {
+//   console.log("Caught interrupt signal");
+//   firebaseRefArduino.update({ isArduinoOn: false });
+//   process.exit();
+// });

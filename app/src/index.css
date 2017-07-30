@@ -5,8 +5,15 @@ body {
 }
 
 .box {
-    margin: auto;
-    width: 50%;
-    height: 500px;
-    width: 500px;
+    padding-top: 2vh;
+    margin-left: 20%;
+}
+
+@media (min-width: 900px) {
+    .box {
+        margin: auto;
+        width: 50%;
+        height: 500px;
+        width: 200px;
+    }
 }

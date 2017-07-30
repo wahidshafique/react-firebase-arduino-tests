@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SketchPicker } from 'react-color';
+import { CirclePicker as ColorPicker} from 'react-color';
 import * as firebase from 'firebase';
 import logo from './logo.svg';
 import './App.css';
@@ -50,7 +50,7 @@ class App extends Component {
           <h3>The Arduino {this.state.isArduinoOn ? 'is on' : 'is off'} {!this.state.isArduinoInit ? "and it's firebase data has not been initialized (try running it for the first time)" : ''}</h3>
         </div>
         <div className="box">
-          <SketchPicker color={this.state.colors} onChangeComplete={this.handleChangeComplete} />
+          <ColorPicker circleSize='55' color={this.state.colors} onChangeComplete={this.handleChangeComplete} />
         </div>
 
       </div>
