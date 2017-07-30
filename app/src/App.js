@@ -10,21 +10,29 @@ class App extends Component {
     super();
     this.state = {
       colors: '#a00000',
-      colorRef: firebase.database().ref(),
+      dbRefApp: firebase.database().ref().child('app'),
+      dbRefArduino: firebase.database().ref().child('arduino'),
+      isArduinoOn: false,
+      isArduinoInit: true
     }
   }
 
-  // componentDidMount() {
-  //   this.state.colorRef.on('value', snap => {
-  //     this.setState({
-  //       colors: snap.val()
-  //     })
-  //   });
-  // }
+  componentDidMount() {
+    this.state.dbRefArduino.on('value', snap => {
+      if (snap.val() !== null) {
+        this.setState({
+          isArduinoInit: true,
+          isArduinoOn: snap.val().isArduinoOn
+        })
+      } else {
+        this.setState({ isArduinoInit: false })
+      }
+    });
+  }
 
   handleChangeComplete = (color) => {
     this.setState({ colors: color.hex });
-    this.state.colorRef.set({
+    this.state.dbRefApp.set({
       color: this.state.colors
     })
   };
@@ -39,9 +47,10 @@ class App extends Component {
         <div className="App-header" style={colorBoxStyle}>
           <img src={logo} className="App-logo" alt="logo" />
           <h3>{this.state.colors}</h3>
+          <h3>The Arduino {this.state.isArduinoOn ? 'is on' : 'is off'} {!this.state.isArduinoInit ? "and it's firebase data has not been initialized (try running it for the first time)" : ''}</h3>
         </div>
         <div className="box">
-          <SketchPicker color = {this.state.colors} onChangeComplete={ this.handleChangeComplete }/>
+          <SketchPicker color={this.state.colors} onChangeComplete={this.handleChangeComplete} />
         </div>
 
       </div>
