@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "app": {
+      ".read": true,
+      ".write": true
+    },
+    "arduino": {
+      ".read": true,
+      ".write": true
+    },
+    "auth": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}

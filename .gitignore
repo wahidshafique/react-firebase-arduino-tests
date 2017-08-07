@@ -22,3 +22,16 @@ yarn-error.log*
 
 #ignoring the api key
 firebaseKey.js
+
+/.vscode
+/coverage
+firebase-debug.log
+npm-debug.log
+package-lock.json
+
+#ignore the build, if you want to deploy the static app just use npm run build
+build/
+
+.DS_Store
+.idea
+*.iml

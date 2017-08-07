@@ -5,8 +5,8 @@ const firebaseKey = require('./firebasekey.js');
 // Create a new reference of Firebase db from module (you have to add the key yourself by visiting the firebase console)
 const config = firebaseKey.key;
 Firebase.initializeApp(config);
-const firebaseRefArduino = Firebase.database().ref().child('arduino');
-const firebaseRefApp = Firebase.database().ref().child('app');
+const firebaseRefArduino = Firebase.database().ref("arduino");
+const firebaseRefApp = Firebase.database().ref("app");
 
 const LEDPINS = [9, 10, 11];
 firebaseRefArduino.set({ isArduinoOn: false })

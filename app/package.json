@@ -15,6 +15,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "react-color": "^2.13.4"
+    "react-color": "^2.13.4",
+    "react-materialize": "^1.0.6"
   }
 }
