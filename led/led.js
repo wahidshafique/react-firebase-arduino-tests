@@ -9,6 +9,7 @@ const firebaseRefArduino = Firebase.database().ref("arduino");
 const firebaseRefApp = Firebase.database().ref("app");
 
 const LEDPINS = [9, 10, 11];
+const REFRESH_RATE = 100;
 firebaseRefArduino.set({ isArduinoOn: false })
 
 
@@ -22,7 +23,7 @@ five.Board().on("ready", function () {
     firebaseRefArduino.update({ isArduinoOn: false });
   });
 
-  this.loop(1000, function () {
+  this.loop(REFRESH_RATE, function () {
 
     let fbColor = '#555555';
 
@@ -34,7 +35,7 @@ five.Board().on("ready", function () {
       }
     });
 
-    console.log(fbColor);
+    //console.log(fbColor);
     //not sure how extensive the range of the arduino LED is...
     rgb.color(fbColor);
   });
