@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { CirclePicker as ColorPicker, SketchPicker as HelperPicker } from 'react-color'
 import * as firebase from 'firebase'
-import { Col, Row } from 'react-materialize'
+import { Col, Row, Button } from 'react-materialize'
 import logo from './logo.svg'
 import './App.css'
 
@@ -11,11 +11,32 @@ class App extends Component {
     super();
     this.state = {
       colorsArray: [],
-      color: '#a00000',
+      color: '#000000',
       dbRefApp: firebase.database().ref('app'),
       dbRefArduino: firebase.database().ref('arduino'),
       isArduinoOn: false,
-      isArduinoInit: true
+      isArduinoInit: true,
+      isPlayingSong: false,
+      counter: -1
+    };
+
+    this.addOne = this.addOne.bind(this)
+
+    this.queWords = [
+      "You are now ringing Wahid",
+      "..You ringed him again, that is quite good"
+    ]
+  }
+
+  addOne(max) {
+    if (this.state.counter < max - 1) {
+      this.setState({
+        counter: this.state.counter + 1
+      })
+    } else {
+      this.setState({
+        counter: 0
+      })
     }
   }
 
@@ -24,7 +45,8 @@ class App extends Component {
       if (snap.val() !== null) {
         this.setState({
           isArduinoInit: true,
-          isArduinoOn: snap.val().isArduinoOn
+          isArduinoOn: snap.val().isArduinoOn,
+          isPlayingSong: snap.val().isPlayingSong
         })
       } else {
         this.setState({ isArduinoInit: false })
@@ -37,7 +59,6 @@ class App extends Component {
       }
     })
   }
-
 
   handleChangeComplete = (color) => {
     this.setState({ color: color.hex });
@@ -53,17 +74,31 @@ class App extends Component {
     })
   }
 
-  render() {
-    const colorBoxStyle = {
-      backgroundColor: this.state.color
-    };
+  sendSong = (e) => {
+    this.addOne(this.queWords.length)
+    this.setState({ isPlayingSong: true });
+    this.state.dbRefArduino.update({
+      isPlayingSong: true
+    })
+  }
 
+  showFlavourText(props) {
+    let queBox = null
+    const indexNum = this.state.counter
+    if (this.state.isPlayingSong) {
+      return (<h3>{this.queWords[indexNum]}</h3>)
+    }
+  }
+
+  renderApp(props) {
     return (
       <div className="App">
         <div className="App-header" style={colorBoxStyle}>
           <img src={logo} onClick={this.removeColor} className="App-logo" alt="logo" />
           <h4>{this.state.color}</h4>
           <h5>The Arduino {this.state.isArduinoOn ? 'is on' : 'is off'} {!this.state.isArduinoInit ? "and it's firebase data has not been initialized (try running it for the first time)" : ''}</h5>
+          <Button floating large className='blue' waves='light' icon='dialer_sip' onClick={this.sendSong} disabled={this.state.isPlayingSong} />
+          {this.showFlavourText()}
         </div>
         <Row className="container color-box">
           <Col>
@@ -74,6 +109,18 @@ class App extends Component {
             />
           </Col>
         </Row>
+      </div>
+    )
+  }
+
+
+  render() {
+    const colorBoxStyle = {
+      backgroundColor: this.state.color
+    };
+    return (
+      <div>
+        {this.renderApp()}
       </div>
     );
   }
