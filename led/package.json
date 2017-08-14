@@ -10,6 +10,7 @@
     "firebase": "3.7.4"
   },
   "devDependencies": {
-    "serialport": "^5.0.0-beta8"
+    "serialport": "^5.0.0-beta8",
+    "tty": "^1.0.1"
   }
 }
