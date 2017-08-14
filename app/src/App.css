@@ -31,3 +31,22 @@
     /* height: 50px; */
     width: 300px;
 }
+
+.super-text{
+    color: white;
+    z-index: 99;
+    position: absolute;
+}
+
+#gif-wrap {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	background-color: #000;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
